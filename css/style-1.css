@@ -1,0 +1,260 @@
+/*
+Stylesheet for Patient Dashboard.
+Ron Akanowicz
+
+
+*/
+
+@import url("normalize.css");
+
+/* Heading stuff 
+*/
+
+html {
+  font-family: Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.header {
+	height: 80px;
+  border: 1px solid #999;
+  border-radius: 8px;
+	margin: 10px;
+  
+}
+
+h1 {
+  font-size: 1.4rem;
+	margin-top: 0;
+	padding: 30px 0px 0px 20px;
+  color: #666;
+}
+
+.nav-0 {
+    list-style-type: none;
+    /*margin: 15px 0px 0px 0px;*/
+    padding: 0;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    /*margin-right: 20px;*/
+}
+
+.nav-1 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+    position: -webkit-sticky;
+  position: sticky;
+}
+
+.nav-0>li, .nav-1>li {
+    display: inline;
+    margin-right: 10px;
+}
+
+
+.nav-0 a {
+  font-size: .8rem;
+  margin-left: 8px;
+}
+
+.sortBy {
+  font-size: .7rem;
+  margin: 0px 0px 8px 20px;
+}
+
+.col-4 {
+  display: inline-block;
+  margin: auto;
+}
+
+.searchField {
+  float: right;
+}
+
+.nav1 {
+  padding: 8px 20px;
+
+}
+
+
+/* summaryBlock stuff 
+*/
+
+section {
+  float: left;
+  padding: 20px;
+  width: 100%;  /* On mobile devices < 600px the sections will stack */
+}
+
+@media (min-width: 600px) {
+  section {
+    width: 50%; /* On devices > 600px the sections will be in 2 columns */
+  }
+}
+
+
+.gauge {
+  margin: auto;
+}
+
+.summaryBlock {
+	border-bottom: 1px dotted #ccc;
+	padding: 20px;
+}
+
+#patientCount {
+  display: inline-block;
+}
+
+#theCount::after {
+	content: " Patients";
+}
+
+/* main stuff 
+*/
+
+.main {
+	padding: 40px 20px 40px;
+}
+
+
+.patientData {
+	margin: 0px 0px 0px 10px;
+	/*line-height: 1.5;*/
+}
+
+
+/* This section syles the patient blocks 
+on the dashboard. There are style classes for when
+a reading crosses a certain threshold. */
+
+
+
+.patientBlock {
+  min-width: 300px;
+  padding: .5rem;
+  margin: .25rem;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+.selectedBlock {
+  border: 1px solid red;
+}
+
+h2 {
+  margin-left: 35px;
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 10px 20px 0px 0px;
+
+}
+
+.patientContent-1 h3 {
+    border-bottom: 1px solid #ccc;
+
+}
+
+h4 {
+  font-size: 1rem;
+  color: #666;
+  margin: 0px 0px 10px 10px;
+}
+
+h5 {
+  margin: 5px 0px 10px 0px;
+}
+
+
+
+.readingBlock {
+  font-size: 1rem;
+  position: relative;
+}
+
+
+p {
+  /*margin: 0 -.5rem;*/
+  padding: .5rem;
+  position: relative;
+}
+
+p>strong {
+  float: right;
+}
+
+.worse {
+  color: red;
+}
+
+.better {
+  color: green;
+}
+
+.reading {
+  font-size: 1.5em;
+}
+
+.reading::after {
+  content = "mgdl";
+  font-size: .6rem;
+}
+
+.units {
+  font-size: .5rem;
+  color: #ccc;
+}
+
+/* When reading rises add these classes
+*/
+
+
+.readingUp {
+  font-size: 2rem;
+
+}
+
+.readingHigh {
+  font-size: 2.0rem;
+  font-weight: bold;
+  border: 1px solid blue;
+}
+
+
+.readingVeryHigh {
+  font-size: 2.3rem;
+  font-weight: bold;
+  border: 1px solid red;
+  box-shadow: none;
+
+}
+
+.readingVeryHigh .readingBlock::after {
+	content = "&#x21;";
+}
+
+.lAlign {
+  text-align: right
+}
+
+table {
+  margin: 0;
+}
+
+
+
+@media (max-width:576px) {
+
+.patientContent-1, .patientContent-2
+
+}

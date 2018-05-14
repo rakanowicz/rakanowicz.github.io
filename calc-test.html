@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/styles.css">
+	<title>Calcultation Test</title>
+</head>
+<body>
+
+<div id="outputDiv" class="outputDiv"></div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script>
+
+jQuery(document).ready(function ($) {
+
+
+var patients = [
+
+{   firstName: "Abby",
+        lastName: "Adams",
+        gender: "female",
+        age: 29,
+        weight: 155,
+        height: 64,
+        pcp: "Dr. Marsha Mellow",
+        glucose: [
+            {readingDate: "January 1, 2018", readingValue: 122},
+            {readingDate: "December 31, 2018", readingValue: 117},
+            {readingDate: "December 30, 2018", readingValue: 108},
+            {readingDate: "December 29, 2018", readingValue: 100},
+            {readingDate: "December 28, 2018", readingValue: 103},
+            {readingDate: "December 27, 2018", readingValue: 107},
+            {readingDate: "December 26, 2018", readingValue: 103}
+        ]
+
+    },
+
+    {   firstName: "Blake",
+        lastName: "Brown",
+        gender: "male",
+        age: 57,
+        weight: 237,
+        height: 73,
+        pcp: "Dr. Barry White",
+        glucose: [
+            {readingDate: "January 1, 2018", readingValue: 201},
+            {readingDate: "December 31, 2018", readingValue: 199},
+            {readingDate: "December 30, 2018", readingValue: 213},
+            {readingDate: "December 29, 2018", readingValue: 193},
+            {readingDate: "December 28, 2018", readingValue: 188},
+            {readingDate: "December 27, 2018", readingValue: 198},
+            {readingDate: "December 26, 2018", readingValue: 219}
+        ]
+
+    },
+   	{
+		firstName: "Hannah",
+        lastName: "Horvath",
+        gender: "female",
+        age: 32,
+        weight: 159,
+        height: 60,
+        pcp: "Dr. Marnie Jones",
+        glucose: [
+            {readingDate: "January 1, 2018", readingValue: 144},
+            {readingDate: "December 31, 2018", readingValue: 127},
+            {readingDate: "December 30, 2018", readingValue: 132},
+            {readingDate: "December 29, 2018", readingValue: 133},
+            {readingDate: "December 28, 2018", readingValue: 140},
+            {readingDate: "December 27, 2018", readingValue: 145},
+            {readingDate: "December 26, 2018", readingValue: 150}
+        ]
+
+    }
+    ];
+
+ 
+  
+
+for (var patient of patients)
+{
+
+	for (var reading of patient.glucose) {
+
+		var percentChange = (((patient.glucose[0].readingValue - patient.glucose[1].readingValue)/patient.glucose[1].readingValue)*100);
+		var rounded = percentChange.toFixed(1);
+
+		var template = `<div>Reading <span class="readingBlock">${reading.readingValue}</span><br ></div>`;
+
+		$("#outputDiv").append(template); 
+
+		console.log(patient.glucose[0].readingValue);
+
+		if  ((patient.glucose[0].readingValue > 150) && (patient.glucose[0].readingValue < 200))  {
+         
+             $("span.readingBlock").addClass("readingHigh");
+
+         } else if ((patient.glucose[0].readingValue) > 200) {
+             
+             $("span.readingBlock").addClass("readingVeryHigh");
+         }
+	}
+
+
+
+
+}
+
+
+
+
+}); //end of jquery document ready 
+
+   </script>
+	
+</body>
+</html>

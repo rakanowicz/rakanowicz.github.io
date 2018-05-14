@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="http://fonts.googleapis.com/css?family=Armata" rel="stylesheet" type="text/css">
+        
+        <link href="css/jquery.gridder.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+	<title>Gauge Test 5-1</title>
+</head>
+<body>
+
+<h1>Gauge Test May 1, 2018</h1>
+
+<div id="gaugeContainer">
+    <div id="gauge"></div>
+    <p>This is the gauge test</p>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="js/raphael-2.1.4.min.js"></script>
+<script src="js/justgage.js"></script>
+<script>
+
+jQuery(document).ready(function ($) {
+
+	var num = 1;
+
+      var g = new JustGage({
+        id: "gauge",
+        value: 155,
+        min: 0,
+        max: 3200,
+        title: "mg/dl"
+      });
+ 
+ 	// justGage({id, value})
+
+ 	
+
+
+    });
+
+</script>
+
+</body>
+</html>

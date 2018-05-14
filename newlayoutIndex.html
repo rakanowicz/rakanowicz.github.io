@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="http://fonts.googleapis.com/css?family=Armata" rel="stylesheet" type="text/css">
+        
+        <link href="css/jquery.gridder.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style-1.css">
+
+        <title>Patient Dashboard - FEWD Final Project</title>
+    </head>
+    <body>
+
+        <div class="container">
+            
+            <div class="row header">
+
+            <h1>Patient Glucose Dashboard</h1>
+
+            <ul class="nav-0">
+                <li class="nav-item"><a href=#>My Account</a></li>
+                <li class="nav-item"><a href=#>Logout</a></li>
+            </ul>
+            </div><!-- end of row header -->
+
+            <div class="row nav1">
+
+            <div class="patientCount col-4"></div>
+
+            <div class="sortOptions col-4">
+            
+            <ul class="nav-1">
+                <li><span class="sortBy">Sort by </span></li>
+                <li class="navItem"><a href=#>Readings</a></li>
+                <li class="navItem"><a href=#>Last Name</a></li>
+                <li class="navItem"><a href=#></a></li>
+            </ul>
+            </div><!-- end of sortOptions -->
+
+            <div class="searchField col-4">
+                <input type="search" name="searchField" value="" placeholder="search">
+            </div>
+      
+            </div><!-- end of row nav1 -->
+
+
+            <div class="row main">
+
+                <section class="leftSection"></section>
+                <section class="rightSection"></section>
+
+            </div><!-- end of row main -->
+        </div><!-- end of container -->
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/raphael-2.1.4.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/justgage.js"></script>
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+
+var patients = [
+
+    {   firstName: "Abby",
+        lastName: "Adams",
+        gender: "female",
+        age: 29,
+        weight: 155,
+        height: 64,
+        pcp: "Dr. Marsha Mellow",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 122},
+            {readingDate: "December 31, 2018", readingValue: 117},
+            {readingDate: "December 30, 2018", readingValue: 108},
+            {readingDate: "December 29, 2018", readingValue: 100},
+            {readingDate: "December 28, 2018", readingValue: 103},
+            {readingDate: "December 27, 2018", readingValue: 107},
+            {readingDate: "December 26, 2018", readingValue: 103}
+        ]
+
+    },
+
+    {   firstName: "Blake",
+        lastName: "Brown",
+        gender: "male",
+        age: 57,
+        weight: 237,
+        height: 73,
+        pcp: "Dr. Barry White",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 188},
+            {readingDate: "December 31, 2018", readingValue: 199},
+            {readingDate: "December 30, 2018", readingValue: 213},
+            {readingDate: "December 29, 2018", readingValue: 193},
+            {readingDate: "December 28, 2018", readingValue: 188},
+            {readingDate: "December 27, 2018", readingValue: 198},
+            {readingDate: "December 26, 2018", readingValue: 219}
+        ]
+
+    },
+
+    {   firstName: "Charlotte",
+        lastName: "Chapman",
+        gender: "female",
+        age: 46,
+        weight: 168,
+        height: 67,
+        pcp: "Dr. Suzi Wong",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 133},
+            {readingDate: "December 31, 2018", readingValue: 126},
+            {readingDate: "December 30, 2018", readingValue: 122},
+            {readingDate: "December 29, 2018", readingValue: 124},
+            {readingDate: "December 28, 2018", readingValue: 136},
+            {readingDate: "December 27, 2018", readingValue: 140},
+            {readingDate: "December 26, 2018", readingValue: 142}
+        ]
+
+    },
+
+    {   firstName: "Daniel",
+        lastName: "Davis",
+        gender: "male",
+        age: 62,
+        weight: 199,
+        height: 70,
+        pcp: "Dr. Marcus Welby",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 137},
+            {readingDate: "December 31, 2018", readingValue: 150},
+            {readingDate: "December 30, 2018", readingValue: 154},
+            {readingDate: "December 29, 2018", readingValue: 144},
+            {readingDate: "December 28, 2018", readingValue: 165},
+            {readingDate: "December 27, 2018", readingValue: 140},
+            {readingDate: "December 26, 2018", readingValue: 171}
+        ]
+
+    },
+
+    {   firstName: "Ernesto",
+        lastName: "Evangelisa",
+        gender: "male",
+        age: 38,
+        weight: 188,
+        height: 67,
+        pcp: "Dr. Jonas Seigle",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 101},
+            {readingDate: "December 31, 2018", readingValue: 98},
+            {readingDate: "December 30, 2018", readingValue: 97},
+            {readingDate: "December 29, 2018", readingValue: 94},
+            {readingDate: "December 28, 2018", readingValue: 100},
+            {readingDate: "December 27, 2018", readingValue: 103},
+            {readingDate: "December 26, 2018", readingValue: 108}
+        ]
+
+    },
+
+    {   firstName: "Farrah",
+        lastName: "Franklin",
+        gender: "female",
+        age: 44,
+        weight: 168,
+        height: 62,
+        pcp: "Dr. Mona Moore",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 115},
+            {readingDate: "December 31, 2018", readingValue: 122},
+            {readingDate: "December 30, 2018", readingValue: 119},
+            {readingDate: "December 29, 2018", readingValue: 117},
+            {readingDate: "December 28, 2018", readingValue: 117},
+            {readingDate: "December 27, 2018", readingValue: 122},
+            {readingDate: "December 26, 2018", readingValue: 126}
+        ]
+
+    },
+
+    {   firstName: "George",
+        lastName: "Gladstone",
+        gender: "male",
+        age: 50,
+        weight: 224,
+        height: 72,
+        pcp: "Dr. Betty Bellman",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 166},
+            {readingDate: "December 31, 2018", readingValue: 180},
+            {readingDate: "December 30, 2018", readingValue: 184},
+            {readingDate: "December 29, 2018", readingValue: 187},
+            {readingDate: "December 28, 2018", readingValue: 190},
+            {readingDate: "December 27, 2018", readingValue: 200},
+            {readingDate: "December 26, 2018", readingValue: 203}
+        ]
+
+    },
+
+    {   firstName: "Hannah",
+        lastName: "Horvath",
+        gender: "female",
+        age: 32,
+        weight: 159,
+        height: 60,
+        pcp: "Dr. Marnie Jones",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 144},
+            {readingDate: "December 31, 2018", readingValue: 127},
+            {readingDate: "December 30, 2018", readingValue: 132},
+            {readingDate: "December 29, 2018", readingValue: 133},
+            {readingDate: "December 28, 2018", readingValue: 140},
+            {readingDate: "December 27, 2018", readingValue: 145},
+            {readingDate: "December 26, 2018", readingValue: 150}
+        ]
+    }
+
+]; //end of patients array
+
+    var num = 0; 
+
+    var patientSection = $('section'); 
+
+    for (var patient of patients) {
+
+
+        for(let i = 1; i < patient.glucose.length; i++) {
+          let current = patient.glucose[i-1].readingValue;
+          let prev = patient.glucose[i].readingValue;
+          if (current > prev) {
+            patient.glucose[i].change = 'up';
+            patient.glucose[i].changePercent = ((current - prev) / prev * 100).toFixed(1);
+          } else if (current < prev) {
+            patient.glucose[i].change = 'down';
+            patient.glucose[i].changePercent = ((prev - current) / prev * 100).toFixed(1);
+          } else {
+            patient.glucose[i].change = 'no-change';
+          }     
+        }
+
+        for(let reading of patient.glucose) {
+              
+              let readingDate = new Date(reading.readingDate).toLocaleDateString('en-US');
+              let readingClass = reading.readingValue > 150 ? ' class="'+reading.change+' high-reading"' : ' class="'+reading.change+'"';
+              var readingTemplate =
+                ` <p>${readingDate}: <strong${readingClass} data-change-percent="${reading.changePercent}">${reading.readingValue}</strong>
+                 `;
+              var readings = $(readingTemplate);
+              
+              readings.appendTo(".readingDetails");
+              
+            }
+
+
+        var patientTemplate = `
+            <div class="patientBlock">
+                <h3>${patient.firstName} ${patient.lastName}</h3>
+                <div class="readingBlock">
+                <div class="gauge" id="gauge-${num}" style="width:180px; height:120px"></div>
+                </div><!-- end of readingBlock -->
+
+                <div class="readingDetails">
+
+                </div><!-- end of readingDetails -->
+            </div><!--end of patientBlock -->
+        `;        
+
+        var altIndex = num % 2;
+ 
+        var current = $(patientTemplate).appendTo(patientSection.eq(altIndex));
+
+
+
+        var patientObject = {};
+        patientObject.id = "gauge-" + num;
+        patientObject.value = patient.glucose[0].readingValue;
+        patientObject.min = 0;
+        patientObject.max = 300;
+        patientObject.title = "mg/dl";
+
+        new JustGage(patientObject);
+
+    ++num;
+
+
+} // end of for loop
+
+
+    var patientcountTemplate = `${num} patients`;
+
+    $(".patientCount").append(patientcountTemplate)
+
+
+}); //end of document ready function
+
+</script>
+</body>
+</html>

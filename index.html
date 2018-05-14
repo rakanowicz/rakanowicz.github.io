@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="http://fonts.googleapis.com/css?family=Armata" rel="stylesheet" type="text/css">
+        
+        <link href="css/jquery.gridder.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+        <title>Patient Dashboard - FEWD Final Project</title>
+    </head>
+    <body>
+
+        <div class="container">
+            
+            <div class="row header">
+
+            <h1>Patient Glucose Dashboard</h1>
+
+            <ul class="nav-0">
+                <li class="nav-item"><a href=#>My Account</a></li>
+                <li class="nav-item"><a href=#>Logout</a></li>
+            </ul>
+            </div><!-- end of row header -->
+
+            <div class="row nav1">
+
+            <div class="patientCount col-4"></div>
+
+            <div class="sortOptions col-4">
+            
+            <ul class="nav-1">
+                <li><span class="sortBy">Sort by </span></li>
+                <li class="navItem"><a href=#>Readings</a></li>
+                <li class="navItem"><a href=#>Last Name</a></li>
+                <li class="navItem"><a href=#></a></li>
+            </ul>
+            </div><!-- end of sortOptions -->
+
+            <div class="searchField col-4">
+                <input type="search" name="searchField" value="" placeholder="search">
+            </div>
+      
+            </div><!-- end of row nav1 -->
+
+
+            <div class="row main">
+            
+                <ul class="gridder"></ul><!-- patientBlocks get listed here -->
+
+                <div class="patientContent"><!-- patient Content gets added here -->
+                </div>
+               
+
+            </div><!-- end of row main -->
+        </div><!-- end of container -->
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+<script src="js/jquery.gridder.js"></script>
+
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/raphael-2.1.4.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/justgage.js"></script>
+
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+    // REMOVE AND ADD CLICK EVENT 
+    $('.doAddItem').on('click', function () {
+        $(".gridder").data('gridderExpander').gridderAddItem('TEST');
+        // plot("#placeholder");
+    });
+
+    // Call Gridder
+    $(".gridder").gridderExpander({
+        scrollOffset: 60,
+        scrollTo: "panel", // "panel" or "listitem"
+        animationSpeed: 400,
+        animationEasing: "easeInOutExpo",
+        onStart: function () {
+            console.log("Gridder Inititialized");
+        },
+        onExpanded: function (object) {
+            console.log("Gridder Expanded");
+        },
+        onChanged: function (object) {
+            console.log("Gridder Changed");
+        },
+        onClosed: function () {
+            console.log("Gridder Closed");
+        }
+    });
+
+
+var patients = [
+
+    {   firstName: "Abby",
+        lastName: "Adams",
+        gender: "female",
+        age: 29,
+        weight: 155,
+        height: 64,
+        pcp: "Dr. Marsha Mellow",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 122},
+            {readingDate: "December 31, 2018", readingValue: 117},
+            {readingDate: "December 30, 2018", readingValue: 108},
+            {readingDate: "December 29, 2018", readingValue: 100},
+            {readingDate: "December 28, 2018", readingValue: 103},
+            {readingDate: "December 27, 2018", readingValue: 107},
+            {readingDate: "December 26, 2018", readingValue: 103}
+        ]
+
+    },
+
+    {   firstName: "Blake",
+        lastName: "Brown",
+        gender: "male",
+        age: 57,
+        weight: 237,
+        height: 73,
+        pcp: "Dr. Barry White",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 188},
+            {readingDate: "December 31, 2018", readingValue: 199},
+            {readingDate: "December 30, 2018", readingValue: 213},
+            {readingDate: "December 29, 2018", readingValue: 193},
+            {readingDate: "December 28, 2018", readingValue: 188},
+            {readingDate: "December 27, 2018", readingValue: 198},
+            {readingDate: "December 26, 2018", readingValue: 219}
+        ]
+
+    },
+
+    {   firstName: "Charlotte",
+        lastName: "Chapman",
+        gender: "female",
+        age: 46,
+        weight: 168,
+        height: 67,
+        pcp: "Dr. Suzi Wong",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 133},
+            {readingDate: "December 31, 2018", readingValue: 126},
+            {readingDate: "December 30, 2018", readingValue: 122},
+            {readingDate: "December 29, 2018", readingValue: 124},
+            {readingDate: "December 28, 2018", readingValue: 136},
+            {readingDate: "December 27, 2018", readingValue: 140},
+            {readingDate: "December 26, 2018", readingValue: 142}
+        ]
+
+    },
+
+    {   firstName: "Daniel",
+        lastName: "Davis",
+        gender: "male",
+        age: 62,
+        weight: 199,
+        height: 70,
+        pcp: "Dr. Marcus Welby",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 137},
+            {readingDate: "December 31, 2018", readingValue: 150},
+            {readingDate: "December 30, 2018", readingValue: 154},
+            {readingDate: "December 29, 2018", readingValue: 144},
+            {readingDate: "December 28, 2018", readingValue: 165},
+            {readingDate: "December 27, 2018", readingValue: 140},
+            {readingDate: "December 26, 2018", readingValue: 171}
+        ]
+
+    },
+
+    {   firstName: "Ernesto",
+        lastName: "Evangelisa",
+        gender: "male",
+        age: 38,
+        weight: 188,
+        height: 67,
+        pcp: "Dr. Jonas Seigle",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 101},
+            {readingDate: "December 31, 2018", readingValue: 98},
+            {readingDate: "December 30, 2018", readingValue: 97},
+            {readingDate: "December 29, 2018", readingValue: 94},
+            {readingDate: "December 28, 2018", readingValue: 100},
+            {readingDate: "December 27, 2018", readingValue: 103},
+            {readingDate: "December 26, 2018", readingValue: 108}
+        ]
+
+    },
+
+    {   firstName: "Farrah",
+        lastName: "Franklin",
+        gender: "female",
+        age: 44,
+        weight: 168,
+        height: 62,
+        pcp: "Dr. Mona Moore",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 115},
+            {readingDate: "December 31, 2018", readingValue: 122},
+            {readingDate: "December 30, 2018", readingValue: 119},
+            {readingDate: "December 29, 2018", readingValue: 117},
+            {readingDate: "December 28, 2018", readingValue: 117},
+            {readingDate: "December 27, 2018", readingValue: 122},
+            {readingDate: "December 26, 2018", readingValue: 126}
+        ]
+
+    },
+
+    {   firstName: "George",
+        lastName: "Gladstone",
+        gender: "male",
+        age: 50,
+        weight: 224,
+        height: 72,
+        pcp: "Dr. Betty Bellman",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 166},
+            {readingDate: "December 31, 2018", readingValue: 180},
+            {readingDate: "December 30, 2018", readingValue: 184},
+            {readingDate: "December 29, 2018", readingValue: 187},
+            {readingDate: "December 28, 2018", readingValue: 190},
+            {readingDate: "December 27, 2018", readingValue: 200},
+            {readingDate: "December 26, 2018", readingValue: 203}
+        ]
+
+    },
+
+    {   firstName: "Hannah",
+        lastName: "Horvath",
+        gender: "female",
+        age: 32,
+        weight: 159,
+        height: 60,
+        pcp: "Dr. Marnie Jones",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 144},
+            {readingDate: "December 31, 2018", readingValue: 127},
+            {readingDate: "December 30, 2018", readingValue: 132},
+            {readingDate: "December 29, 2018", readingValue: 133},
+            {readingDate: "December 28, 2018", readingValue: 140},
+            {readingDate: "December 27, 2018", readingValue: 145},
+            {readingDate: "December 26, 2018", readingValue: 150}
+        ]
+
+    }
+
+]; //end of patients array
+
+    var num =0; 
+
+    for (var patient of patients) {
+
+
+        // This code calculates the percent change 
+
+        var percentChange = (((patient.glucose[0].readingValue - patient.glucose[1].readingValue)/patient.glucose[1].readingValue)*100);
+
+        var rounded = percentChange.toFixed(1);
+
+        if (rounded < 0) {
+            var displayChange = `<span class="better"> ${rounded}%</span> `;
+        } else {
+            var displayChange = `<span class="worse"> +${rounded}%</span> `;
+        }
+
+        ++num;
+
+        // This code creates the templates for the patient blocks and details
+
+        var template = `
+        <li class="gridder-list" data-griddercontent="#gridder-content-${num}">
+            <div class="patientBlock">
+                <h3>${patient.firstName} ${patient.lastName}</h3>
+                <div class="readingBlock">
+                <p>${patient.glucose[0].readingDate} <strong><span class="reading">${patient.glucose[0].readingValue}</span>${displayChange}</strong></p>
+                </div><!-- end of readingBlock -->
+            </div><!--end of patientBlock -->
+            </li>
+        `;
+
+
+        var patientTemplate = `
+                    <div id="gridder-content-${num}" class="gridder-content">
+                
+                    <div class="row patientTopRow">
+
+                        <div class="patientContent-1">
+                             <h3>${patient.firstName} ${patient.lastName}</h3>
+                             <h5>PCP: ${patient.pcp}</h5>
+                            <table>
+                            <tr><td class="lAlign">Gender:</td><td>${patient.gender}</td></tr>
+                            <tr><td class="lAlign">Age:</td><td>${patient.age}</td></tr>
+                            <tr><td class="lAlign">Weight:</td><td>${patient.weight}</td></tr>
+                            <tr><td class="lAlign">Height:</td><td>${patient.height}</td></tr>
+                            </table>
+
+                        </div><!-- end patientContent-1 -->
+
+                        <div class="patientContent-2">
+                            <div id="gaugeContainer">
+                                <div id="gauge" style="width:300px; height:200px"></div>
+                            </div><!-- end of gaugeContainer -->
+                        </div><!-- end patientContent-2 -->
+
+                    </div><!-- end of row -->
+
+                    <div class="row">
+                        <div class="patientContent-3">
+                            <h2>Glucose Chart</h2>
+                            <div id="placeholder" style="width:500px;height:200px" class="demo-placeholder"></div>
+
+                        </div><!-- end patientContent-3 -->
+
+                    </div><!-- end of row -->
+                </div><!-- end of gridder-content -->
+
+        `;
+
+        // This code appends the block and details tempaltes to the html
+
+        $(".gridder").append(template);
+        $(".patientContent").append(patientTemplate);
+
+
+
+
+
+        // WHY won't this work below?
+
+        // if ((patients.glucose[0].readingValue > 120) && (patients.glucose[0].readingValue < 150))  {
+
+        //      $(".readingBlock").addClass("readingUp");
+
+        //  } else if 
+       
+        // ((patients.glucose[0].readingValue > 150) && (patients.glucose[0].readingValue < 200)) 
+        //  {
+        //      $(".readingBlock").addClass("readingHigh");
+
+        //  } else if ((patients.glucose[0].readingValue) > 200) {
+             
+        //      $(".readingBlock").addClass("readingVeryHigh");
+        //  }
+
+
+
+    } // end of for loop
+
+        var g = new JustGage({
+        id: "gauge",
+        value: 155,
+        min: 0,
+        max: 300,
+        title: "mg/dl"
+      });
+
+    var patientcountTemplate = `${num} patients`;
+
+    $(".patientCount").append(patientcountTemplate)
+
+
+     });
+</script>
+</body>
+</html>
