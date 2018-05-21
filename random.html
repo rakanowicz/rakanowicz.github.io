@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Generate random reading</title>
+</head>
+<body>
+
+<button id="randy">Click for random reading</button>
+<div></div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+var minNumber = 50;
+var maxNumber = 250;
+
+var randomNumber = randomNumberFromRange(minNumber, maxNumber);
+
+function randomNumberFromRange(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+$('button').click(function(){
+
+	$("div").append(randomNumber);
+
+});
+
+console.log(randomNumber);
+
+});
+</script>
+	
+</body>
+</html>

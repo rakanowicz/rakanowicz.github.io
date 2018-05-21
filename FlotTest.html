@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flot Test</title>
+</head>
+<body>
+
+
+<div></div>
+
+<div id="placeholder" style="width:600px;height:300px"></div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
+
+<script type="text/javascript" language="javascript" src="js/raphael-2.1.4.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/justgage.js"></script>
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+const patients = [
+
+    {   firstName: "Abby",
+        lastName: "Adams",
+        gender: "female",
+        age: 29,
+        weight: 155,
+        height: 64,
+        pcp: "Dr. Marsha Mellow",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 122},
+            {readingDate: "December 31, 2018", readingValue: 117},
+            {readingDate: "December 30, 2018", readingValue: 108},
+            {readingDate: "December 29, 2018", readingValue: 100},
+            {readingDate: "December 28, 2018", readingValue: 103},
+            {readingDate: "December 27, 2018", readingValue: 107},
+            {readingDate: "December 26, 2018", readingValue: 103}
+        ]
+
+    },
+
+    {   firstName: "Blake",
+        lastName: "Brown",
+        gender: "male",
+        age: 57,
+        weight: 237,
+        height: 73,
+        pcp: "Dr. Barry White",
+        glucose: [
+            {readingDate: "January 1, 2019", readingValue: 188},
+            {readingDate: "December 31, 2018", readingValue: 199},
+            {readingDate: "December 30, 2018", readingValue: 213},
+            {readingDate: "December 29, 2018", readingValue: 193},
+            {readingDate: "December 28, 2018", readingValue: 188},
+            {readingDate: "December 27, 2018", readingValue: 198},
+            {readingDate: "December 26, 2018", readingValue: 219}
+        ]
+
+    }
+    ];
+
+
+    var dataArray = [[0,122],[1,133],[2,121],[3,115],[4,101]];
+
+	var dataset = [{label: "mg/dl",data: dataArray}];
+	        var options = {
+            series: {
+                lines: { show: true },
+                points: {
+                    radius: 4,
+                    show: true
+                }
+            }
+        };
+
+    console.log(dataArray);
+
+	$.plot($("#placeholder"), dataset, options);
+
+
+});
+</script>
+
+	
+</body>
+</html>

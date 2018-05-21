@@ -1,0 +1,17 @@
+//assign the existing patient to a variable for the first time through when there //is nothing in local storage:
+
+var patientTemp = {} <- put my patients array into this.
+
+//Then check and of course it will use 'paitentTemp' since there's nothing local
+
+var patients = localStorage.getItem("patients2") ? JSON.parse(localStorage.getItem("patients2")) : patientTemp;
+
+//Then run the rest of the code (the big FOR loop that draws everyting)
+//Then click the button to unshift random variables onto the array
+//Then stringify the array
+
+var patientArray = JSON.stringify(patients);
+
+localStorage.setItem("patients2",patientArray);
+
+//then refresh the page

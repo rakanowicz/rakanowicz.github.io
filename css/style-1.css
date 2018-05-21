@@ -22,7 +22,7 @@ html {
 	height: 80px;
   border: 1px solid #999;
   border-radius: 8px;
-	margin: 10px;
+	margin: 10px 20px;
   
 }
 
@@ -35,12 +35,10 @@ h1 {
 
 .nav-0 {
     list-style-type: none;
-    /*margin: 15px 0px 0px 0px;*/
     padding: 0;
     position: absolute;
     top: 0px;
     right: 20px;
-    /*margin-right: 20px;*/
 }
 
 .nav-1 {
@@ -48,13 +46,12 @@ h1 {
     margin: 0;
     padding: 0;
     margin-left: 20px;
-    position: -webkit-sticky;
-  position: sticky;
 }
+
 
 .nav-0>li, .nav-1>li {
     display: inline;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 
@@ -63,25 +60,37 @@ h1 {
   margin-left: 8px;
 }
 
+.nav-1 a {
+  font-size: .9rem;
+}
+
 .sortBy {
   font-size: .7rem;
   margin: 0px 0px 8px 20px;
 }
 
-.col-4 {
-  display: inline-block;
-  margin: auto;
+.nav1 {
+  /*padding: 8px 20px;*/
+  margin: 10px 20px;
+  background-color:white;
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top: 0px;
+  border-bottom: 1px solid #666;
+  z-index: 10;
 }
 
-.searchField {
+.patientCount>p {
+  padding: 10px;
+  margin: 5px 10px;
+}
+
+.time {
   float: right;
 }
-
-.nav1 {
-  padding: 8px 20px;
-
-}
-
 
 /* summaryBlock stuff 
 */
@@ -92,13 +101,6 @@ section {
   width: 100%;  /* On mobile devices < 600px the sections will stack */
 }
 
-@media (min-width: 600px) {
-  section {
-    width: 50%; /* On devices > 600px the sections will be in 2 columns */
-  }
-}
-
-
 .gauge {
   margin: auto;
 }
@@ -108,9 +110,9 @@ section {
 	padding: 20px;
 }
 
-#patientCount {
+/*#patientCount {
   display: inline-block;
-}
+}*/
 
 #theCount::after {
 	content: " Patients";
@@ -120,7 +122,7 @@ section {
 */
 
 .main {
-	padding: 40px 20px 40px;
+	padding: 20px 20px 40px;
 }
 
 
@@ -182,10 +184,9 @@ h5 {
   position: relative;
 }
 
-
 p {
-  /*margin: 0 -.5rem;*/
-  padding: .5rem;
+  margin: 0 -.5rem;
+  padding: 0 .5rem;
   position: relative;
 }
 
@@ -193,66 +194,55 @@ p>strong {
   float: right;
 }
 
-.worse {
+strong.up::before {
+  content: attr(data-change-percent) '% ⇡ ';
   color: red;
+  margin-right: .5rem;
 }
 
-.better {
+strong.down::before {
+  content: attr(data-change-percent) '% ⇣ ';
   color: green;
+  margin-right: .5rem;
 }
 
-.reading {
-  font-size: 1.5em;
+p:nth-child(even) {
+  background-color: rgba(0,0,0,.1)
 }
 
-.reading::after {
-  content = "mgdl";
-  font-size: .6rem;
-}
-
-.units {
-  font-size: .5rem;
-  color: #ccc;
-}
-
-/* When reading rises add these classes
-*/
-
-
-.readingUp {
-  font-size: 2rem;
-
-}
-
-.readingHigh {
-  font-size: 2.0rem;
-  font-weight: bold;
-  border: 1px solid blue;
+.high-reading::after {
+  content:'';
+  position: absolute;
+  background-color: red;
+  height: .5rem;
+  width: .5rem;
+  border-radius: 50%;
+  right: 50%;
+  transform: translateY(.5rem);
 }
 
 
-.readingVeryHigh {
-  font-size: 2.3rem;
-  font-weight: bold;
-  border: 1px solid red;
-  box-shadow: none;
-
+.fas {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
-.readingVeryHigh .readingBlock::after {
-	content = "&#x21;";
+.fa-plus {
+  color: lightgray;
+  transform: rotate(0deg);  /* Set the icon initial rotation value */
+  transition: transform .5s ease-in; /* Add the transition for smooth rotation */
 }
 
-.lAlign {
-  text-align: right
+.fa-plus.spin {
+  transform: rotate(45deg); /* Rotate the arrow when the spin class is added */
 }
 
-table {
-  margin: 0;
+@media (min-width: 600px) {
+  section {
+    width: 50%; /* On devices > 600px the sections will be in 2 columns */
+  }
 }
-
-
-
 @media (max-width:576px) {
 
 .patientContent-1, .patientContent-2

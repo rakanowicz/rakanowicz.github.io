@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Firebase Demo</title>
+</head>
+<body>
+	
+<input type="text" id="name" required="true"><button>Save</button>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAvnC4neiKh6oQ3jBgxNE3TZmDwcH6Zk88",
+    authDomain: "demo2-f3c6f.firebaseapp.com",
+    databaseURL: "https://demo2-f3c6f.firebaseio.com",
+    projectId: "demo2-f3c6f",
+    storageBucket: "demo2-f3c6f.appspot.com",
+    messagingSenderId: "1060405850684"
+  };
+  firebase.initializeApp(config);
+
+
+$(document).ready(function(){
+
+$('button').click(function(){
+	var name = $('#name').val();
+
+	alert(name);
+
+	var nameObj = {
+		fullName: name
+	};
+
+	/* gets a refernce to my database based on the config information copied above. Then give the name db a reference name called 'names' in this case (but that can be anything. */
+
+	firebase.database().ref('names').push().set(nameObj);
+
+});
+
+});
+
+</script>
+</body>
+</html>

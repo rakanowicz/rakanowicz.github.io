@@ -6,15 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="http://fonts.googleapis.com/css?family=Armata" rel="stylesheet" type="text/css">
-
-<!--         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-
         
-        <!-- <link href="css/jquery.gridder.min.css" rel="stylesheet"> -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
+        <link href="css/jquery.gridder.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/style-1.css">
-
 
         <title>Patient Dashboard - FEWD Final Project</title>
     </head>
@@ -38,7 +32,6 @@
 
             </div><!-- end of row nav1 -->
 
-
             <div class="row main">
 
                 <section class="leftSection"></section>
@@ -49,8 +42,6 @@
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
 
@@ -110,10 +101,10 @@ var patients = [
         height: 67,
         pcp: "Dr. Suzi Wong",
         glucose: [
-            {readingDate: "January 1, 2019", readingValue: 144},
-            {readingDate: "December 31, 2018", readingValue: 148},
-            {readingDate: "December 30, 2018", readingValue: 152},
-            {readingDate: "December 29, 2018", readingValue: 139},
+            {readingDate: "January 1, 2019", readingValue: 133},
+            {readingDate: "December 31, 2018", readingValue: 126},
+            {readingDate: "December 30, 2018", readingValue: 122},
+            {readingDate: "December 29, 2018", readingValue: 124},
             {readingDate: "December 28, 2018", readingValue: 136},
             {readingDate: "December 27, 2018", readingValue: 140},
             {readingDate: "December 26, 2018", readingValue: 142}
@@ -148,7 +139,7 @@ var patients = [
         height: 67,
         pcp: "Dr. Jonas Seigle",
         glucose: [
-            {readingDate: "January 1, 2019", readingValue: 85},
+            {readingDate: "January 1, 2019", readingValue: 101},
             {readingDate: "December 31, 2018", readingValue: 98},
             {readingDate: "December 30, 2018", readingValue: 97},
             {readingDate: "December 29, 2018", readingValue: 94},
@@ -186,7 +177,7 @@ var patients = [
         height: 72,
         pcp: "Dr. Betty Bellman",
         glucose: [
-            {readingDate: "January 1, 2019", readingValue: 190},
+            {readingDate: "January 1, 2019", readingValue: 166},
             {readingDate: "December 31, 2018", readingValue: 180},
             {readingDate: "December 30, 2018", readingValue: 184},
             {readingDate: "December 29, 2018", readingValue: 187},
@@ -232,7 +223,6 @@ var patients = [
                 </div><!-- end of readingBlock -->
                 <div class="readingDetails">
                 </div><!-- end of readingDetails -->
-                <i class="fas fa-plus close" role="button"></i>
             </div><!--end of patientBlock -->
         `;  
 
@@ -262,19 +252,13 @@ var patients = [
         for(let reading of patient.glucose) {
           
           let readingDate = new Date(reading.readingDate).toLocaleDateString('en-US');
-          let readingClass = reading.readingValue > 179 ? ' class="'+reading.change+' high-reading"' : ' class="'+reading.change+'"';
+          let readingClass = reading.readingValue > 150 ? ' class="'+reading.change+' high-reading"' : ' class="'+reading.change+'"';
           let readingTemplate =
-            ` <p>${readingDate}: <strong${readingClass} data-change-percent="${reading.changePercent}">${reading.readingValue}</strong>
+            ` <p>${readingDate}: <strong ${readingClass}><span class="readingInfo">${reading.readingValue} ${reading.changePercent}</span></strong>
             `;
           let readings = $(readingTemplate);
           
           current.find('.readingDetails').append(readings);
-          // console.log(reading.readingValue);
-
-          if (reading.readingValue[0] > 179) {
-            $(this).parent().css("border","2px solid red");
-
-          }
           
         }
 
@@ -285,8 +269,6 @@ var patients = [
         patientObject.min = 0;
         patientObject.max = 300;
         patientObject.title = "mg/dl";
-        patientObject.customSectors = [{"lo":0,"hi":70,"color":"#a9d70b"},{"lo":71,"hi":125,"color":" #20a306"},{"lo":125,"hi":179,"color":"#e1b40e"},{"lo":180,"hi":300,"color":"#ff0000"}];
-        patientObject.levelColorsGradient = false;
 
         new JustGage(patientObject);
 
@@ -298,48 +280,17 @@ var patients = [
     $('.readingDetails').hide();
   
     $('.patientBlock').click(function(){
-        element = $(this);
-        element.find('i').toggleClass('spin');
         $(this).find(".readingDetails").slideToggle(); 
-
     });
  
     var d = new Date();
     var n = d.toLocaleString();
 
-    var patientcountTemplate = `<p>${num} patients <button id="getNewReadings">Get Readings</button> <span class="time">${n}</span></p>`;
+    var patientcountTemplate = `<p>${num} patients  <span class="time">${n}</span></p>`;
 
     $(".patientCount").append(patientcountTemplate);
 
 
-
-    $('button').click(function(){
-
-
-        for (var patientReading of patients ) {
-
-            var minNumber = 50;
-            var maxNumber = 250;
-            var theReading = patientReading.glucose;
-
-            var randomNumber = randomNumberFromRange(minNumber, maxNumber);
-
-            function randomNumberFromRange(min,max)
-            {
-                return Math.floor(Math.random()*(max-min+1)+min);
-            }
-
-            var obj = {
-                readingDate: new Date(),
-                readingValue: randomNumber
-            }
-
-            theReading.unshift(obj);
-
-            console.log(obj)
-        }
-
-    }); // end of button click 
 
 
 }); //end of document ready function

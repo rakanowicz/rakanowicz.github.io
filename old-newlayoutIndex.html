@@ -6,15 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="http://fonts.googleapis.com/css?family=Armata" rel="stylesheet" type="text/css">
-
-<!--         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-
         
-        <!-- <link href="css/jquery.gridder.min.css" rel="stylesheet"> -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
+        <link href="css/jquery.gridder.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/style-1.css">
-
 
         <title>Patient Dashboard - FEWD Final Project</title>
     </head>
@@ -34,8 +28,22 @@
 
             <div class="row nav1">
 
-                <div class="patientCount"></div>
+            <div class="patientCount col-4"></div>
 
+            <div class="sortOptions col-4">
+            
+            <ul class="nav-1">
+                <li><span class="sortBy">Sort by </span></li>
+                <li class="navItem"><a href=#>Readings</a></li>
+                <li class="navItem"><a href=#>Last Name</a></li>
+                <li class="navItem"><a href=#></a></li>
+            </ul>
+            </div><!-- end of sortOptions -->
+
+            <div class="searchField col-4">
+                <input type="search" name="searchField" value="" placeholder="search">
+            </div>
+      
             </div><!-- end of row nav1 -->
 
 
@@ -49,8 +57,6 @@
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
 
@@ -110,10 +116,10 @@ var patients = [
         height: 67,
         pcp: "Dr. Suzi Wong",
         glucose: [
-            {readingDate: "January 1, 2019", readingValue: 144},
-            {readingDate: "December 31, 2018", readingValue: 148},
-            {readingDate: "December 30, 2018", readingValue: 152},
-            {readingDate: "December 29, 2018", readingValue: 139},
+            {readingDate: "January 1, 2019", readingValue: 133},
+            {readingDate: "December 31, 2018", readingValue: 126},
+            {readingDate: "December 30, 2018", readingValue: 122},
+            {readingDate: "December 29, 2018", readingValue: 124},
             {readingDate: "December 28, 2018", readingValue: 136},
             {readingDate: "December 27, 2018", readingValue: 140},
             {readingDate: "December 26, 2018", readingValue: 142}
@@ -148,7 +154,7 @@ var patients = [
         height: 67,
         pcp: "Dr. Jonas Seigle",
         glucose: [
-            {readingDate: "January 1, 2019", readingValue: 85},
+            {readingDate: "January 1, 2019", readingValue: 101},
             {readingDate: "December 31, 2018", readingValue: 98},
             {readingDate: "December 30, 2018", readingValue: 97},
             {readingDate: "December 29, 2018", readingValue: 94},
@@ -186,7 +192,7 @@ var patients = [
         height: 72,
         pcp: "Dr. Betty Bellman",
         glucose: [
-            {readingDate: "January 1, 2019", readingValue: 190},
+            {readingDate: "January 1, 2019", readingValue: 166},
             {readingDate: "December 31, 2018", readingValue: 180},
             {readingDate: "December 30, 2018", readingValue: 184},
             {readingDate: "December 29, 2018", readingValue: 187},
@@ -224,59 +230,51 @@ var patients = [
     for (var patient of patients) {
 
 
+        for(let i = 1; i < patient.glucose.length; i++) {
+          let current = patient.glucose[i-1].readingValue;
+          let prev = patient.glucose[i].readingValue;
+          if (current > prev) {
+            patient.glucose[i].change = 'up';
+            patient.glucose[i].changePercent = ((current - prev) / prev * 100).toFixed(1);
+          } else if (current < prev) {
+            patient.glucose[i].change = 'down';
+            patient.glucose[i].changePercent = ((prev - current) / prev * 100).toFixed(1);
+          } else {
+            patient.glucose[i].change = 'no-change';
+          }     
+        }
+
+        for(let reading of patient.glucose) {
+              
+              let readingDate = new Date(reading.readingDate).toLocaleDateString('en-US');
+              let readingClass = reading.readingValue > 150 ? ' class="'+reading.change+' high-reading"' : ' class="'+reading.change+'"';
+              var readingTemplate =
+                ` <p>${readingDate}: <strong${readingClass} data-change-percent="${reading.changePercent}">${reading.readingValue}</strong>
+                 `;
+              var readings = $(readingTemplate);
+              
+              readings.appendTo(".readingDetails");
+              
+            }
+
+
         var patientTemplate = `
             <div class="patientBlock">
                 <h3>${patient.firstName} ${patient.lastName}</h3>
                 <div class="readingBlock">
-                    <div class="gauge" id="gauge-${num}" style="width:180px; height:120px"></div>
+                <div class="gauge" id="gauge-${num}" style="width:180px; height:120px"></div>
                 </div><!-- end of readingBlock -->
+
                 <div class="readingDetails">
+
                 </div><!-- end of readingDetails -->
-                <i class="fas fa-plus close" role="button"></i>
             </div><!--end of patientBlock -->
-        `;  
+        `;        
 
         var altIndex = num % 2;
  
         var current = $(patientTemplate).appendTo(patientSection.eq(altIndex));
 
-        // for (var reading of patient.glucose) {
-        //     current.find('.readingDetails').append(reading.readingValue);
-        // }
-
-
-        for(let i = 1; i < patient.glucose.length; i++) {
-          let current = patient.glucose[i-1].readingValue;
-          let prev = patient.glucose[i].readingValue;
-          if (current > prev) {
-            patient.glucose[i-1].change = 'up';
-            patient.glucose[i-1].changePercent = ((current - prev) / prev * 100).toFixed(1);
-          } else if (current < prev) {
-            patient.glucose[i-1].change = 'down';
-            patient.glucose[i-1].changePercent = ((prev - current) / prev * 100).toFixed(1);
-          } else {
-            patient.glucose[i-1].change = 'no-change';
-          }     
-        }
-    
-        for(let reading of patient.glucose) {
-          
-          let readingDate = new Date(reading.readingDate).toLocaleDateString('en-US');
-          let readingClass = reading.readingValue > 179 ? ' class="'+reading.change+' high-reading"' : ' class="'+reading.change+'"';
-          let readingTemplate =
-            ` <p>${readingDate}: <strong${readingClass} data-change-percent="${reading.changePercent}">${reading.readingValue}</strong>
-            `;
-          let readings = $(readingTemplate);
-          
-          current.find('.readingDetails').append(readings);
-          // console.log(reading.readingValue);
-
-          if (reading.readingValue[0] > 179) {
-            $(this).parent().css("border","2px solid red");
-
-          }
-          
-        }
 
 
         var patientObject = {};
@@ -285,61 +283,18 @@ var patients = [
         patientObject.min = 0;
         patientObject.max = 300;
         patientObject.title = "mg/dl";
-        patientObject.customSectors = [{"lo":0,"hi":70,"color":"#a9d70b"},{"lo":71,"hi":125,"color":" #20a306"},{"lo":125,"hi":179,"color":"#e1b40e"},{"lo":180,"hi":300,"color":"#ff0000"}];
-        patientObject.levelColorsGradient = false;
 
         new JustGage(patientObject);
 
-        ++num;
+    ++num;
+
 
 } // end of for loop
 
 
-    $('.readingDetails').hide();
-  
-    $('.patientBlock').click(function(){
-        element = $(this);
-        element.find('i').toggleClass('spin');
-        $(this).find(".readingDetails").slideToggle(); 
+    var patientcountTemplate = `${num} patients`;
 
-    });
- 
-    var d = new Date();
-    var n = d.toLocaleString();
-
-    var patientcountTemplate = `<p>${num} patients <button id="getNewReadings">Get Readings</button> <span class="time">${n}</span></p>`;
-
-    $(".patientCount").append(patientcountTemplate);
-
-
-
-    $('button').click(function(){
-
-
-        for (var patientReading of patients ) {
-
-            var minNumber = 50;
-            var maxNumber = 250;
-            var theReading = patientReading.glucose;
-
-            var randomNumber = randomNumberFromRange(minNumber, maxNumber);
-
-            function randomNumberFromRange(min,max)
-            {
-                return Math.floor(Math.random()*(max-min+1)+min);
-            }
-
-            var obj = {
-                readingDate: new Date(),
-                readingValue: randomNumber
-            }
-
-            theReading.unshift(obj);
-
-            console.log(obj)
-        }
-
-    }); // end of button click 
+    $(".patientCount").append(patientcountTemplate)
 
 
 }); //end of document ready function
