@@ -14,6 +14,10 @@ html {
   font-family: Helvetica, sans-serif;
 }
 
+body {
+  background-color: #ccc;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -21,9 +25,9 @@ html {
 .header {
 	height: 80px;
   border: 1px solid #999;
-  border-radius: 8px;
+  border-radius: 6px;
 	margin: 10px 20px;
-  
+  background-color: white;
 }
 
 h1 {
@@ -80,6 +84,7 @@ h1 {
   position: -o-sticky;
   top: 0px;
   border-bottom: 1px solid #666;
+  border-radius: 6px;
   z-index: 10;
 }
 
@@ -143,8 +148,11 @@ a reading crosses a certain threshold. */
   padding: .5rem;
   margin: .25rem;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #666;
   position: relative;
+  background-color: white;
+  border-radius: 6px;
+
 }
 
 .selectedBlock {
@@ -181,13 +189,13 @@ h5 {
 
 .readingBlock {
   font-size: 1rem;
-  position: relative;
+  /*position: relative;*/
 }
 
 p {
   margin: 0 -.5rem;
   padding: 0 .5rem;
-  position: relative;
+  /*position: relative;*/
 }
 
 p>strong {
